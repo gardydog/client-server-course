@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import FirebaseDatabase
 
 class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
 
@@ -19,6 +20,8 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
     var searchFlag = false
 
     var token: NotificationToken?
+    
+    private let ref = Database.database().reference(withPath: "usersGroups") //Создали контейнер для usersGroups (У нас появилась папка usersGroups)
     
     var groups: Results<GroupModel>? {
         didSet {
@@ -88,6 +91,10 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
                 let group = allGroups.extraGroups[indexPath.row]
                 
                 realmManager.add(models: [group])
+                
+                let groupAdded = FirebaseGroupModelAdd(id: group.id, name: group.name, avatar: group.avatar)
+                let groupRef = self.ref.child(Session.shared.userId).child(group.name)
+                groupRef.setValue(groupAdded.toAnyObject())
             }
         }
     }

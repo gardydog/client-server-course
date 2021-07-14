@@ -8,13 +8,15 @@
 import UIKit
 import WebKit
 import SwiftKeychainWrapper
-import DynamicJSON
+import FirebaseDatabase
 
 class VKLoginController: UIViewController {
     
     let networkservice = NetworkService()
     let realmService = RealmManager()
     let fromLoginToTabBar = "fromLoginToTabBar"
+    
+    private let ref = Database.database().reference(withPath: "users") //Создали контейнер для users (У нас появилась папка users)
 
     @IBOutlet weak var webView: WKWebView! {
         didSet {
@@ -80,16 +82,17 @@ extension VKLoginController: WKNavigationDelegate {
         }
         //Организуем хранилище данных двумя разными способами:
         KeychainWrapper.standard.set(token, forKey: "token")
-        Session.shared.token = token
+        Session.shared.token = token    //Сохраняем наш токен в тот токен, который мы создали в классе синглтона
 
         UserDefaults.standard.set(userIdString, forKey: "userIdString")
         Session.shared.userId = userIdString
-        
-
-          Session.shared.token = token //Сохраняем наш токен в тот токен, который мы создали в классе синглтона
-          Session.shared.userId = userIdString
               
-              performSegue(withIdentifier: fromLoginToTabBar, sender: nil) //Функция перехода с главного экарана на другие
+        let user = FirebaseUserModel(id: userIdString)
+        let userRef = self.ref.child(userIdString)
+        userRef.setValue(user.toAnyObject())
+
+        
+        performSegue(withIdentifier: fromLoginToTabBar, sender: nil) //Функция перехода с главного экарана на другие
         
         decisionHandler(.cancel)
     }
