@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		040CC26F2660FA47003750DD /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040CC26E2660FA47003750DD /* CustomButton.swift */; };
+		041A2F8B26A1C83F00104A65 /* FirebaseNewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A2F8A26A1C83F00104A65 /* FirebaseNewsModel.swift */; };
+		0424DC85269F3B8D002DD447 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0424DC84269F3B8D002DD447 /* GoogleService-Info.plist */; };
 		042562E1267F9B6900DAFCB9 /* VKLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042562E0267F9B6900DAFCB9 /* VKLoginController.swift */; };
 		042562E3267FA38B00DAFCB9 /* Session (SingleTon).swift in Sources */ = {isa = PBXBuildFile; fileRef = 042562E2267FA38B00DAFCB9 /* Session (SingleTon).swift */; };
 		042562E5267FA53B00DAFCB9 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042562E4267FA53B00DAFCB9 /* NetworkService.swift */; };
@@ -41,7 +43,6 @@
 		04F294642670E456003921D9 /* AnimatorOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F294632670E456003921D9 /* AnimatorOpen.swift */; };
 		04F294662670F793003921D9 /* AnimatorClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F294652670F793003921D9 /* AnimatorClose.swift */; };
 		04F294682670F875003921D9 /* FriendsTableVC + NavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F294672670F875003921D9 /* FriendsTableVC + NavigationDelegate.swift */; };
-		04F29B76269F312200E3AE58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04F29B75269F312200E3AE58 /* GoogleService-Info.plist */; };
 		04F60D0B264E999B0071B0E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F60D0A264E999B0071B0E4 /* AppDelegate.swift */; };
 		04F60D0D264E999B0071B0E4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F60D0C264E999B0071B0E4 /* SceneDelegate.swift */; };
 		04F60D0F264E999B0071B0E4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F60D0E264E999B0071B0E4 /* ViewController.swift */; };
@@ -53,6 +54,8 @@
 
 /* Begin PBXFileReference section */
 		040CC26E2660FA47003750DD /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		041A2F8A26A1C83F00104A65 /* FirebaseNewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseNewsModel.swift; sourceTree = "<group>"; };
+		0424DC84269F3B8D002DD447 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Урок 8. Firebase backend/Архив/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		042562E0267F9B6900DAFCB9 /* VKLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginController.swift; sourceTree = "<group>"; };
 		042562E2267FA38B00DAFCB9 /* Session (SingleTon).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session (SingleTon).swift"; sourceTree = "<group>"; };
 		042562E4267FA53B00DAFCB9 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -86,7 +89,6 @@
 		04F294632670E456003921D9 /* AnimatorOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatorOpen.swift; sourceTree = "<group>"; };
 		04F294652670F793003921D9 /* AnimatorClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatorClose.swift; sourceTree = "<group>"; };
 		04F294672670F875003921D9 /* FriendsTableVC + NavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FriendsTableVC + NavigationDelegate.swift"; sourceTree = "<group>"; };
-		04F29B75269F312200E3AE58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Архив/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04F60D07264E999B0071B0E4 /* VKApp1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKApp1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F60D0A264E999B0071B0E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04F60D0C264E999B0071B0E4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				04913C762684A99700F53A36 /* Photos.swift */,
 				0490A602266569AD004D722D /* News.swift */,
 				04D0AC48268F4B0100D83E32 /* DynamicJSON */,
+				04F29B77269F31EA00E3AE58 /* Firebase */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 			children = (
 				04B7E312269F3241001290E0 /* FirebaseUserModel.swift */,
 				04B7E314269F3250001290E0 /* FirebaseGroupModelAdd.swift */,
+				041A2F8A26A1C83F00104A65 /* FirebaseNewsModel.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -253,7 +257,6 @@
 				042562DF267F9B3B00DAFCB9 /* Network */,
 				04D646AE267A780C00FA8279 /* Resources */,
 				04D7091C26596BD5001A1C8B /* Models */,
-				04F29B77269F31EA00E3AE58 /* Firebase */,
 				04311D5326761D32007926D1 /* ViewController */,
 				045B66C1266670AC00931A92 /* News */,
 				04D7092326596D61001A1C8B /* Friends */,
@@ -262,7 +265,7 @@
 				04F60D13264E999C0071B0E4 /* Assets.xcassets */,
 				04F60D15264E999C0071B0E4 /* LaunchScreen.storyboard */,
 				04F60D18264E999C0071B0E4 /* Info.plist */,
-				04F29B75269F312200E3AE58 /* GoogleService-Info.plist */,
+				0424DC84269F3B8D002DD447 /* GoogleService-Info.plist */,
 			);
 			path = VKApp1;
 			sourceTree = "<group>";
@@ -346,7 +349,7 @@
 			files = (
 				04913C7B2684BCCE00F53A36 /* GalleryHorizontView.xib in Resources */,
 				04F60D17264E999C0071B0E4 /* LaunchScreen.storyboard in Resources */,
-				04F29B76269F312200E3AE58 /* GoogleService-Info.plist in Resources */,
+				0424DC85269F3B8D002DD447 /* GoogleService-Info.plist in Resources */,
 				04F60D14264E999C0071B0E4 /* Assets.xcassets in Resources */,
 				04F60D12264E999B0071B0E4 /* Main.storyboard in Resources */,
 			);
@@ -418,6 +421,7 @@
 				04B7E315269F3250001290E0 /* FirebaseGroupModelAdd.swift in Sources */,
 				04D709382659997F001A1C8B /* FriendsCollectionViewCell.swift in Sources */,
 				04F60D0F264E999B0071B0E4 /* ViewController.swift in Sources */,
+				041A2F8B26A1C83F00104A65 /* FirebaseNewsModel.swift in Sources */,
 				04311D5226761D1D007926D1 /* CustomNavigationController.swift in Sources */,
 				04F60D0B264E999B0071B0E4 /* AppDelegate.swift in Sources */,
 				04913C772684A99700F53A36 /* Photos.swift in Sources */,

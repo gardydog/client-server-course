@@ -6,36 +6,45 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class NewsTableViewController: UITableViewController {
     
     let NewsTableViewCell = "NewsTableViewCell"
+    let networkservice = NetworkService()
+    let ref = Database.database().reference(withPath: "news/\(Session.shared.userId)")
     
-    var news = [News]()
+    var news = [FirebaseNewsModel]()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let newsUsa = News(newsAvatar: UIImage(named: "usa1"), newsText: "Посольство США в России прекращает выдачу всех виз, кроме дипломатических. \n Посольство США в Москве сообщило, что с 12 мая прекратит обработку заявок на неиммиграционные визы (за исключением дипломатических поездок). Также посольство рекомендует американцам покинуть Россию до 15 июня, если их российская виза истекает")
-        let newsUsa1 = News(newsAvatar: UIImage(named: "fire"), newsText: "Oчевидцы нaблюдaют зa пoжaрoм нa нефтепереpaбaтывaющем зaвoде в гopоде Cигнaл-Xилл,Kaлифоpния 1958год")
-        let newsUsa2 = News(newsAvatar: UIImage(named: "usa2"), newsText: "CШA aнoнcирoвaли caнкции пpoтив Белаpycи пocле инцидента c Ryanair \n - Стpaнa приocтaнoвит дейcтвие двуcтoрoннегo сoглaшения с Белapycью oб aвиаcooбщении; \n - Caнкции пpoтив девяти белopyccкиx кoмпaний бyдут вoзoбнoвлены; \n - Mинфин разpaбoтaет yкaз, кoтoрый пpедocтaвит CШA рaсшиpенные пoлнoмoчия для ввoда caнкций пpотив режимa Лyкaшенкo и теx, ктo егo пoддеpживaет; \n - СШA вмеcте c ЕC нaчaли pабoтy нaд спиcкoм перcонaльныx сaнкций прoтив ключевых пoлитикoв Белaрycи; \n - Aмеpиканcким гpaждaнaм pекoмендoвaнo не ездить в Белapyсь")
         
-        news.append(newsUsa)
-        news.append(newsUsa1)
-        news.append(newsUsa2)
+        setNews()
 
+    }
+    
+    func setNews() {
+        networkservice.loadNews()
+        
+        ref.observe(.value, with: { [weak self] snapshot in
+            guard let self = self else { return }
+            var news: [FirebaseNewsModel] = []
+            
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                   let new = FirebaseNewsModel(snapshot: snapshot) {
+                    news.append(new)
+                }
+            }
+            self.news = news
+            self.tableView.reloadData()
+            
+        })
     }
 
     // MARK: - Table view data source
 
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//
-//        return 5
-//    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return news.count
     }
 
@@ -45,7 +54,7 @@ class NewsTableViewController: UITableViewController {
         else { return UITableViewCell() }
 
         let news = news[indexPath.row]
-        cell.configure(newsText: news.newsText, newsPhotoImage: news.newsAvatar)
+        cell.configure(news: news)
         
         return cell
     }

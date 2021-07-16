@@ -25,27 +25,29 @@ class NewsTableViewCell: UITableViewCell {
     @IBOutlet weak var eyeLabel: UILabel!
     @IBOutlet weak var eyeImage: UIImageView!
     
-    func tapOnLikeImageAnimation() {                 //Анимация нажатия на сердечко (Ставим лайк)
+    func tapOnLikeImageAnimation(_ count: String) {  //Анимация нажатия на сердечко (Ставим лайк)
         
         UIView.transition(with: likeImage,
                           duration: 0.3,
                           options: [.transitionFlipFromLeft],
                           animations: { [weak self] in
                             self?.likeImage.image = UIImage(systemName: "heart.fill")
+                            self?.likeLabel.text = count
                           }, completion: nil)
     }
     
-    func tapOffLikeImageAnimation() {                //Анимация нажатия на сердечко (Убираем лайк)
+    func tapOffLikeImageAnimation(_ count: String) {     //Анимация нажатия на сердечко (Убираем лайк)
         
         UIView.transition(with: likeImage,
                           duration: 0.4,
                           options: [.transitionCrossDissolve],
                           animations: { [weak self] in
                             self?.likeImage.image = UIImage(systemName: "heart")
+                            self?.likeLabel.text = count
                           }, completion: nil)
     }
     
-    func tapOnCommentAnimation() {                  //Анимация нажатия на комментарий
+    func tapOnCommentAnimation(_ count: String) {                  //Анимация нажатия на комментарий
         let animation = CASpringAnimation(keyPath: "transform.scale")
         animation.fromValue = 0.85
         animation.toValue = 1
@@ -55,10 +57,11 @@ class NewsTableViewCell: UITableViewCell {
         animation.beginTime = CACurrentMediaTime()
         animation.fillMode = CAMediaTimingFillMode.backwards
         
+        self.commentTextLabel.text = count
         self.commentImage.layer.add(animation, forKey: nil)
     }
     
-    func tapOnShareAnimation() {                  //Анимация нажатия на "поделиться"
+    func tapOnShareAnimation(_ count: String) {                  //Анимация нажатия на "поделиться"
         let animation = CASpringAnimation(keyPath: "transform.scale")
         animation.fromValue = 0.85
         animation.toValue = 1
@@ -68,17 +71,12 @@ class NewsTableViewCell: UITableViewCell {
         animation.beginTime = CACurrentMediaTime()
         animation.fillMode = CAMediaTimingFillMode.backwards
         
+        self.shareLabel.text = count
         self.shareImage.layer.add(animation, forKey: nil)
     }
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        likeLabel.text = "0"
-        commentTextLabel.text = "0"
-        shareLabel.text = "0"
-        eyeLabel.text = "0"
         
         let templateLabel = UILabel.appearance()     //Метод, который позволяет редактировать надпись (UILabel)
         templateLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
@@ -102,15 +100,12 @@ class NewsTableViewCell: UITableViewCell {
     //MARK: - Метод распознает нажатия на cheatView (выше) -
     @objc func onTap() {
         if isTapped {
-            tapOnLikeImageAnimation()
-            likeLabel.text = "1"
+            tapOnLikeImageAnimation(String(Int(likeLabel.text!)! + 1))
             likeLabel.textColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)  //При нажатии лайка, счетчик становится красного цвета
-            eyeLabel.text = "1"
             isTapped = false
 
         } else {
-            tapOffLikeImageAnimation()
-            likeLabel.text = "0"
+            tapOffLikeImageAnimation(String(Int(likeLabel.text!)! - 1))
             likeLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             isTapped = true
         }
@@ -118,44 +113,68 @@ class NewsTableViewCell: UITableViewCell {
     
     @objc func onTapOnComment() {
         if isTapped {
-            tapOnCommentAnimation()
-            commentTextLabel.text = "1"
-            eyeLabel.text = "1"
+            tapOnCommentAnimation(String(Int(commentTextLabel.text!)! + 1))
             isTapped = false
 
         } else {
-            tapOnCommentAnimation()
-            commentTextLabel.text = "0"
+            tapOnCommentAnimation(String(Int(commentTextLabel.text!)! - 1))
             isTapped = true
         }
     }
     
     @objc func onTapOnShare() {
         if isTapped {
-            tapOnShareAnimation()
-            shareLabel.text = "1"
-            eyeLabel.text = "1"
+            tapOnShareAnimation(String(Int(shareLabel.text!)! + 1))
             isTapped = false
 
         } else {
-            tapOnShareAnimation()
-            shareLabel.text = "0"
+            tapOnShareAnimation(String(Int(shareLabel.text!)! - 1))
             isTapped = true
         }
     }
     
-    
     func clearCell() {
         newsImage.image = nil
+        newsTextLabel.text = nil
+        likeLabel.text = nil
+        likeImage.image = nil
+        commentTextLabel.text = nil
+        commentImage.image = nil
+        shareLabel.text = nil
+        shareImage.image = nil
+        eyeLabel.text = nil
+        eyeImage.image = nil
     }
     
     override func prepareForReuse() {
        clearCell()
     }
     
-    func configure(newsText: String, newsPhotoImage: UIImage?) {
-        newsTextLabel.text = newsText
-        newsImage.image = newsPhotoImage
+    func configure(news: FirebaseNewsModel) {
+        if let image = news.urlImage {
+        newsImage.sd_setImage(with: URL(string: image))
+        }
+        
+        if let newsText = news.text {
+            newsTextLabel.text = newsText
+        }
+        
+        likeLabel.text = String(news.likesCount)
+        likeImage.image = UIImage(systemName: "heart")
+        commentTextLabel.text = String(news.commentsCount)
+        commentImage.image = UIImage(systemName: "bubble.left")
+        shareLabel.text = String(news.repostsCount)
+        shareImage.image = UIImage(systemName: "arrowshape.turn.up.right")
+        eyeLabel.text = String(news.viewsCount)
+        eyeImage.image = UIImage(systemName: "eye")
+        
+        if news.userLikes > 0 {
+            isTapped = true
+            likeImage.image = UIImage(systemName: "heart.fill")
+        }
+
     }
+    
+    
     
 }

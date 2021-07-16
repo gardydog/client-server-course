@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import DynamicJSON
+import FirebaseDatabase
 
 //Класс для работы с сетевыми запросами
  class NetworkService {
@@ -26,6 +27,7 @@ import DynamicJSON
         case friends = "friends.get"
         case photos = "photos.get"
         case groupsSearch = "groups.search"
+        case loadNews = "newsfeed.get"
     }
     
     //Перечисление типов альбомов с фото пользователей
@@ -151,6 +153,33 @@ import DynamicJSON
                 completion(groups)
             }
          }
+    }
+    
+    //MARK: - Возвращает список новостей - https://vk.com/dev/newsfeed.get
+    func loadNews() {
+        
+        method = .loadNews
+        let ref = Database.database().reference(withPath: "news")
+        
+        let params: Parameters = [
+            "access_token": Session.shared.token,
+            "filters": "post",
+            "count": "5",
+            "v": apiVersion
+        ]
+        
+        let url = baseURL + method!.rawValue
+        
+        AF.request(url, method: .get, parameters: params).responseData { response in
+            guard let data = response.value else { return }
+            guard let items = JSON(data).response.items.array else { return }
+            
+            for news in items {
+                let news = FirebaseNewsModel(data: news)
+                let newRef = ref.child(Session.shared.userId).child(String(news.postId))
+                newRef.setValue(news.toAnyObject())
+            }
+        }
     }
     
 }

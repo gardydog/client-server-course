@@ -38,7 +38,7 @@ class VKLoginController: UIViewController {
         components.path = "/authorize"
         components.queryItems = [
             URLQueryItem(name: "client_id", value: "7884481"), //ID приложения, смотрим в настройках
-            URLQueryItem(name: "scope", value: "262150"), // "https://vk.com/dev/implicit_flow_user"
+            URLQueryItem(name: "scope", value: "270342"), // "https://vk.com/dev/implicit_flow_user"
             URLQueryItem(name: "display", value: "mobile"), // авторизация для мобильных устройств
             URLQueryItem(name: "redirect_uri", value: "https://ouath.vk.com/blank.html"), // Адрес, на который будет переадресован пользователь после прохождения авторизации
             URLQueryItem(name: "response_type", value: "token"),
